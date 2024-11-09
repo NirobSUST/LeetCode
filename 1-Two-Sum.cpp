@@ -1,20 +1,30 @@
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
-        vector<int> ans;
+        // Create an unordered map to store numbers and their indices
+        unordered_map<int, int> seen;
 
-        for(int i = 0; i < nums.size(); i++)
-        {
-    	    for(int j = i+1; j < nums.size(); j++)
-    	    {
-    		    if(nums[i] + nums[j] == target)
-    		    {
-    			    ans.push_back(i);
-    			    ans.push_back(j);
-    			    break;
-    		    }
-    	    }
+        // Iterate over each element in the array
+        for (int i = 0; i < nums.size(); i++) {
+            // Calculate the remainder needed to reach the target
+            int rem = target - nums[i];
+
+            // Check if the remainder is already in the map
+            if (seen.find(rem) != seen.end()) {
+                // If found, return the indices of the remainder and current number
+                return {seen[rem], i};
+            }
+
+            // If not found, store the current number and its index in the map
+            seen[nums[i]] = i;
         }
-    return ans;
-    };
+
+        // Return an empty vector if no pair is found (though problem constraints assume a solution exists)
+        return {};
+    }
 };
+
+/*
+Time Complexity: O(n)
+Space Complexity: O(n)
+*/
